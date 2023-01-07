@@ -1,15 +1,27 @@
 import Image from 'next/image'
-
+import {providers} from "ethers";
 function Home(data1) {
     var dFinal
+    var fromAddress
+    var toAddress
+    var uuid
     function switchPage(){
         location.replace("/index1")
     }
-    async function checkContract(){
-        let tx=await fetch('/api/contract',{"method":"POST"})
-        console.log(await tx.json())
+    async function bruh(id){
+        await window.ethereum.enable()
+        const provider = new providers.Web3Provider(window.ethereum)
+        await provider._ready()
+        fromAddress=provider.provider.selectedAddress.toString()
+        const tx=await fetch('/api/search',{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify({"uuuid":id})})
+        toAddress=await tx.json()
+        toAddress=toAddress[0]["owner"]
+        uuid=id
+        
     }
-    checkContract();
+    async function find(id){
+        bruh(id)
+    }
     async function search(){
         let val=document.getElementById("SearchBar").value;
         let data=await fetch("/api/search",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify({"title":val})})
@@ -33,10 +45,12 @@ function Home(data1) {
                 b.innerHTML="Buy Now"
                 b.setAttribute("class","buyNow")
                 b.setAttribute("id",data1[i]["uuuid"])
+                b.onclick=function(){find(data1[i]["uuuid"])}
                 let b1=document.createElement("button")
                 b1.innerHTML="Buy Now"
                 b1.setAttribute("class","buyNow")
                 b1.setAttribute("id",data1[i]["uuuid"])
+                b1.onclick=function(){find(data1[i]["uuuid"])}
                 hh.innerHTML=data1[i]["date"]
                 im.setAttribute("src","https:/arweave.net/"+data1[i]["thumbnail"])
                 im.setAttribute("class","imgInCard")
@@ -61,7 +75,6 @@ function Home(data1) {
         }
     }
     fetchData()
-    
     return (
         <>
         <link href='https://css.gg/search.css' rel='stylesheet'></link>
