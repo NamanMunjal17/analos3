@@ -24,7 +24,7 @@ function Home(data1) {
     }
     async function search(){
         let val=document.getElementById("SearchBar").value;
-        let data=await fetch("/api/search",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify({"title":val})})
+        let data=await fetch("/api/search1",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify({"arg":val})})
         console.log(await data.json())
     }
     async function fetchData(){
