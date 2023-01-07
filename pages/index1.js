@@ -1,7 +1,7 @@
 import WebBundlr from '@bundlr-network/client';
 import {providers} from "ethers";
 import fileReaderStream from "filereader-stream";
-import { v4 as uuidv4 } from 'uuid';
+import {floor,random} from 'mathjs'
 
 
 export default function Home() {
@@ -35,7 +35,7 @@ export default function Home() {
                     + currentdate.getHours() + ":"  
                     + currentdate.getMinutes() + ":" 
                     + currentdate.getSeconds();
-    await fetch('/api/mon',{method:'POST',headers:{"Content-Type":"application/json"},body:JSON.stringify({"desc":desc,"thumbnail":tx2.id,"file":tx3.id,"date":datetime,"uuuid":uuidv4().toString(),"owner":provider.provider.selectedAddress.toString(),"title":tit})})
+    await fetch('/api/mon',{method:'POST',headers:{"Content-Type":"application/json"},body:JSON.stringify({"desc":desc,"thumbnail":tx2.id,"file":tx3.id,"date":datetime,"uuuid":floor(random() * 10000000000),"owner":provider.provider.selectedAddress.toString(),"title":tit})})
   }
   async function chPrice(){
     await bruh();

@@ -16,6 +16,7 @@
     "ethers": "^5.7.2",
     "filereader-stream": "^2.0.0",
     "fs": "0.0.1-security",
+    "mathjs": "^11.5.0",
     "mongodb": "^4.13.0",
     "net": "^1.0.2",
     "next": "13.1.1",

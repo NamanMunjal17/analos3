@@ -5,6 +5,11 @@ function Home(data1) {
     function switchPage(){
         location.replace("/index1")
     }
+    async function checkContract(){
+        let tx=await fetch('/api/contract',{"method":"POST"})
+        console.log(await tx.json())
+    }
+    checkContract();
     async function search(){
         let val=document.getElementById("SearchBar").value;
         let data=await fetch("/api/search",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify({"title":val})})
@@ -27,9 +32,11 @@ function Home(data1) {
                 let b=document.createElement("button")
                 b.innerHTML="Buy Now"
                 b.setAttribute("class","buyNow")
+                b.setAttribute("id",data1[i]["uuuid"])
                 let b1=document.createElement("button")
                 b1.innerHTML="Buy Now"
                 b1.setAttribute("class","buyNow")
+                b1.setAttribute("id",data1[i]["uuuid"])
                 hh.innerHTML=data1[i]["date"]
                 im.setAttribute("src","https:/arweave.net/"+data1[i]["thumbnail"])
                 im.setAttribute("class","imgInCard")
