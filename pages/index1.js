@@ -27,7 +27,7 @@ export default function Home() {
     const tx3=await bundlr.upload(fileReaderStream(file),{tags: [{name:"Content-Type",value: file.type}]})
     document.getElementById("uploadedAt").innerHTML=tx3.id;
     const msg="Your file has been uploaded to arweave.net/"+tx3.id;
-    //await fetch('/api/twilioMsg',{method:'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify({ phone: phone, message: msg })})
+    await fetch('/api/twilioMsg',{method:'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify({ phone: phone, message: msg })})
     var currentdate = new Date(); 
     var datetime = "Last Sync: " + currentdate.getDate() + "/"
                     + (currentdate.getMonth()+1)  + "/" 
