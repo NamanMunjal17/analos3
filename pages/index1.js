@@ -1,6 +1,7 @@
 import WebBundlr from '@bundlr-network/client';
 import {providers} from "ethers";
 import fileReaderStream from "filereader-stream";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Home() {
@@ -16,14 +17,25 @@ export default function Home() {
     const thumbnail=document.getElementById("thumbnail").files[0];
     const file=document.getElementById("file").files[0];
     const desc=document.getElementById("descrip").value;
+    const tit=document.getElementById("title").value;
+    const p1=await (await bundlr.getPrice(thumbnail.size)).toNumber();
     const p2=await (await bundlr.getPrice(file.size)).toNumber();
     const phone=document.getElementById("phone").value;
-    sum=p2
+    sum=(p2+p1)
     await bundlr.fund(sum);
+    const tx2=await bundlr.upload(fileReaderStream(thumbnail),{tags: [{name:"Content-Type",value: thumbnail.type}]})
     const tx3=await bundlr.upload(fileReaderStream(file),{tags: [{name:"Content-Type",value: file.type}]})
     document.getElementById("uploadedAt").innerHTML=tx3.id;
     const msg="Your file has been uploaded to arweave.net/"+tx3.id;
     //await fetch('/api/twilioMsg',{method:'POST',headers:{'Content-Type': 'application/json'},body: JSON.stringify({ phone: phone, message: msg })})
+    var currentdate = new Date(); 
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/" 
+                    + currentdate.getFullYear() + " @ "  
+                    + currentdate.getHours() + ":"  
+                    + currentdate.getMinutes() + ":" 
+                    + currentdate.getSeconds();
+    await fetch('/api/mon',{method:'POST',headers:{"Content-Type":"application/json"},body:JSON.stringify({"desc":desc,"thumbnail":tx2.id,"file":tx3.id,"date":datetime,"uuuid":uuidv4().toString(),"owner":provider.provider.selectedAddress.toString(),"title":tit})})
   }
   async function chPrice(){
     await bruh();
@@ -66,6 +78,8 @@ export default function Home() {
               <div id="2P">
                 <center>
                 <h2>Write a Description</h2>
+                <input id="title"></input>
+                <br></br><br></br>
                 <textarea id="descrip"></textarea>
                 </center>
               </div>

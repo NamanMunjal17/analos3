@@ -82,8 +82,14 @@ body{
     height: 90%;
     width: 100%;
 }
-.card
-{
+.card{
+    perspective: 1000px;
+    margin-top: 20px;
+    height: 90%;
+    border-radius: 20px;
+}
+.card-front,
+.card-back{
     position: relative;
     height: 90%;
     width: 25%;
@@ -100,6 +106,7 @@ body{
 .buyNow{
     position: absolute;
     bottom: 0;
+    left: 0%;
     width: 100%;
     color: #222;
     border: none;
@@ -121,6 +128,7 @@ body{
     width: 95%;
     background-color: #222;
     height: 3vh;
+    color: white;
 }
 #Search{
     position: relative;
@@ -197,4 +205,52 @@ body{
 #phone{
     background-color: #222;
     border-radius: 20px;
+    color: white;
 }
+#title{
+    background-color: #222;
+    border: none;
+    border-radius: 20px;
+    height: 20px;
+    width: 200px;
+    color: white;
+}
+.imgInCard{
+    position: relative;
+    height: auto;
+    width: 50%;
+}
+.card-front {
+    backface-visibility: hidden;
+    /* Place the front of the card on top */
+    transform: rotateY(0deg);
+    border-radius: 20px;
+    top: 0%;
+    height: 90%;
+    width: 100%;
+  }
+  
+  .card-back {
+    backface-visibility: hidden;
+    /* Place the back of the card on the bottom */
+    transform: rotateY(180deg);
+    /* Hide the back of the card initially */
+    visibility: hidden;
+    position: absolute;
+    border-radius: 20px;
+    top: 0%;
+    width: 100%;
+    margin-top: 0px;
+    height: 100%;
+  }
+  
+  .card:hover .card-front {
+    /* Flip the front of the card on hover */
+    transform: rotateY(-180deg);
+  }
+  
+  .card:hover .card-back {
+    /* Show the back of the card on hover */
+    visibility: visible;
+    transform: rotateY(0deg);
+  }
